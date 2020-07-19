@@ -100,7 +100,7 @@ spec:
               mountPath: /var/jenkins_home
             - name: docker-sock-volume
               mountPath: "/var/run/docker.sock"
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
       volumes:
         # This allows jenkins to use the docker daemon on the host, for running builds
         # see https://stackoverflow.com/questions/27879713/is-it-ok-to-run-docker-from-inside-docker
@@ -118,12 +118,11 @@ metadata:
   name: jenkins
   namespace: default
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: ui
       port: 8080
       targetPort: 8080
-      nodePort: 31000
     - name: jnlp
       port: 50000
       targetPort: 50000
